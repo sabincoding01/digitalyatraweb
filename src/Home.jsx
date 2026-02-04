@@ -1,15 +1,15 @@
-import React from 'react'
-import Botton from './Botton'
+import React, { useState } from 'react'
 
 const Home = () => {
+
+     const [count , setCount] = useState(0);
   return (
     <>
-    <Botton name="Login"/>
-    <Botton name="Logout"/>
-    <Botton name="Register"/>
 
+   {count}
+
+<button onClick={()=> setCount(count+1)}>+</button>
 </>
   )
 }
-
-export default Home
+export default Home;
