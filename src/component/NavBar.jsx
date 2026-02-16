@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { useTopBarVisibility } from "../context/TopBarContext";
 
 export default function NavBar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { isTopBarVisible } = useTopBarVisibility();
 
   const navigation = [
     { name: "Home", href: "#" },
@@ -12,7 +14,11 @@ export default function NavBar() {
   ];
 
   return (
-    <header className="bg-white shadow-sm fixed w-full top-10 z-50">
+    <header
+      className={`bg-white shadow-sm fixed w-full z-50 transition-all duration-300 ${
+        isTopBarVisible ? "top-10" : "top-0"
+      }`}
+    >
       <nav
         aria-label="Global"
         className="mx-auto flex max-w-7xl items-center justify-between p-4 lg:px-8"
@@ -32,28 +38,34 @@ export default function NavBar() {
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                />
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"
+                  d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.884c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5"
                 />
               </svg>
             </div>
-            <span className="text-2xl font-bold text-slate-900">
-              Digital<span className="text-orange-500">Yatra</span>
-            </span>
+            <div className="flex flex-col leading-tight">
+              <span className="text-base font-bold text-slate-800">
+                Digital<span className="text-orange-500">Yatra</span>
+              </span>
+              <span className="text-[10px] text-slate-500 -mt-1">
+                Youth & Technologies
+              </span>
+            </div>
           </a>
         </div>
         <div className="flex lg:hidden">
           <button
             type="button"
-            onClick={() => setMobileMenuOpen(true)}
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
           >
-            <span className="sr-only">Open main menu</span>
-            <Bars3Icon aria-hidden="true" className="size-6" />
+            <span className="sr-only">
+              {mobileMenuOpen ? "Close menu" : "Open main menu"}
+            </span>
+            {mobileMenuOpen ? (
+              <XMarkIcon aria-hidden="true" className="h-6 w-6" />
+            ) : (
+              <Bars3Icon aria-hidden="true" className="h-6 w-6" />
+            )}
           </button>
         </div>
         <div className="hidden lg:flex lg:gap-x-8">
@@ -61,79 +73,52 @@ export default function NavBar() {
             <a
               key={item.name}
               href={item.href}
-              className="text-lg font-semibold text-slate-600 hover:text-orange-500 transition-colors duration-300 ease-in-out"
+              className="text-sm font-semibold leading-6 text-slate-700 hover:text-lime-500 transition-colors"
             >
               {item.name}
             </a>
           ))}
         </div>
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-x-4">
+        <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-3">
           <a
             href="#"
-            className="rounded-full border border-blue-900 px-6 py-2 text-md font-semibold text-blue-900 hover:bg-blue-900 hover:text-white transition-all duration-300 ease-in-out shadow-sm hover:shadow-md"
+            className="text-sm font-semibold leading-6 text-slate-700 border border-slate-300 px-4 py-1.5 rounded-full hover:bg-blue-900 hover:text-white transition-all"
           >
             Student Portal
           </a>
           <a
             href="#"
-            className="rounded-full bg-linear-to-r from-lime-500 to-lime-600 px-6 py-2 text-md font-semibold text-white shadow-sm hover:from-lime-600 hover:to-lime-700 hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-300 ease-in-out"
+            className="text-sm font-semibold leading-6 text-white bg-green-500 px-4 py-1.5 rounded-full hover:bg-green-600 transition-all"
           >
             Contact Us
           </a>
         </div>
       </nav>
-      {/* Mobile Menu */}
+      {/* Mobile menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden" role="dialog" aria-modal="true">
-          <div
-            className="fixed inset-0 z-50 bg-black/20 backdrop-blur-sm"
-            onClick={() => setMobileMenuOpen(false)}
-          />
-          <div className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
-            <div className="flex items-center justify-between">
-              <a href="#" className="-m-1.5 p-1.5 flex items-center gap-2">
-                <span className="text-xl font-bold text-slate-900">
-                  Digital<span className="text-orange-500">Yatra</span>
-                </span>
-              </a>
-              <button
-                type="button"
-                onClick={() => setMobileMenuOpen(false)}
-                className="-m-2.5 rounded-md p-2.5 text-gray-700"
+        <div className="lg:hidden">
+          <div className="space-y-2 px-4 pb-3 pt-2">
+            {navigation.map((item) => (
+              <a
+                key={item.name}
+                href={item.href}
+                className="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
               >
-                <span className="sr-only">Close menu</span>
-                <XMarkIcon aria-hidden="true" className="size-6" />
-              </button>
-            </div>
-            <div className="mt-6 flow-root">
-              <div className="-my-6 divide-y divide-gray-500/10">
-                <div className="space-y-2 py-6">
-                  {navigation.map((item) => (
-                    <a
-                      key={item.name}
-                      href={item.href}
-                      className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                    >
-                      {item.name}
-                    </a>
-                  ))}
-                </div>
-                <div className="py-6 space-y-3">
-                  <a
-                    href="#"
-                    className="block w-full text-center rounded-full border border-blue-900 px-3 py-2.5 text-base font-semibold text-blue-900 hover:bg-blue-900 hover:text-white transition-all duration-300"
-                  >
-                    Student Portal
-                  </a>
-                  <a
-                    href="#"
-                    className="block w-full text-center rounded-full bg-linear-to-r from-lime-500 to-lime-600 px-3 py-2.5 text-base font-semibold text-white shadow-sm hover:from-lime-600 hover:to-lime-700 hover:shadow-lg transition-all duration-300"
-                  >
-                    Contact Us
-                  </a>
-                </div>
-              </div>
-            </div>
+                {item.name}
+              </a>
+            ))}
+            <a
+              href="#"
+              className="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+            >
+              Student Portal
+            </a>
+            <a
+              href="#"
+              className="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white bg-green-500 hover:bg-green-600"
+            >
+              Contact Us
+            </a>
           </div>
         </div>
       )}
