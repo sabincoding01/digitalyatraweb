@@ -73,7 +73,7 @@ export default function NavBar() {
             <a
               key={item.name}
               href={item.href}
-              className="text-sm font-semibold leading-6 text-slate-700 hover:text-lime-500 transition-colors"
+              className="text-sm font-semibold leading-6 text-slate-700 hover:text-orange-600 transition-colors"
             >
               {item.name}
             </a>
