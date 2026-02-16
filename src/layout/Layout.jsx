@@ -1,11 +1,14 @@
 import React from "react";
 import NavBar from "../component/NavBar";
+import TopBar from "../component/TopBar";
 
 const Layout = () => {
   return (
     <div>
+      <TopBar />
       <NavBar />
-      <div className="h-20"></div>
+      {/* Spacer for TopBar (40px) + NavBar (80px) */}
+      <div className="h-[120px]"></div>
     </div>
   );
 };

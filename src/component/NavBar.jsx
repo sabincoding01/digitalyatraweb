@@ -12,7 +12,7 @@ export default function NavBar() {
   ];
 
   return (
-    <header className="bg-white shadow-sm fixed w-full top-0 z-50">
+    <header className="bg-white shadow-sm fixed w-full top-10 z-50">
       <nav
         aria-label="Global"
         className="mx-auto flex max-w-7xl items-center justify-between p-4 lg:px-8"
