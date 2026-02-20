@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // import axios from "axios"; // Uncomment when backend is ready
 
 export default function Register() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -23,15 +24,29 @@ export default function Register() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) return;
     setIsLoading(true);
     // TODO: Uncomment when backend is ready
-    // const response = await axios.post("http://localhost:3000/api/auth/register", formData);
-    // console.log("Registered:", response.data);
-    console.log("Form data ready to submit:", formData);
-    setTimeout(() => setIsLoading(false), 1000);
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/auth/register",
+        formData,
+      );
+      // console.log("Registered:", response.data);
+      console.log("Form data ready to submit:", formData);
+      setTimeout(() => setIsLoading(false), 1000);
+    } catch (error) {
+      alert("something went wrong");
+      //alert(error?.response?.data?.message);
+    }
+
+    // if (Response.status == 201) {
+    //   navigate("/login");
+    // } else {
+    //   alert("Registeration Fail");
+    // }
   };
 
   const passwordMatch =
