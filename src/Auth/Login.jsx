@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { apiUrl } from "../config";
 
 export default function Login() {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -14,15 +16,19 @@ export default function Login() {
     });
   };
 
-  console.log(formData);
-
-  console.log(formData);
-
-  console.log(formData);
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    setTimeout(() => setIsLoading(false), 2000);
+
+    try {
+      const response = await axios.post(`${apiUrl}/auth/login`, formData);
+      console.log("Form data:", formData);
+      console.log("Response:", response.data);
+    } catch (error) {
+      alert(error?.response?.data?.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (

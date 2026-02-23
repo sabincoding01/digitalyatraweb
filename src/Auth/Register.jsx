@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 // import axios from "axios"; // Uncomment when backend is ready
+import { apiUrl } from "../config";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -30,10 +31,7 @@ export default function Register() {
     setIsLoading(true);
     // TODO: Uncomment when backend is ready
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/auth/register",
-        formData,
-      );
+      const response = await axios.post(`${apiUrl}/auth/register`, formData);
       // console.log("Registered:", response.data);
       console.log("Form data ready to submit:", formData);
       setTimeout(() => setIsLoading(false), 1000);

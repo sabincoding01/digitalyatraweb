@@ -4,6 +4,7 @@ import UseEffect from "./useEffect";
 import Layout from "./layout/Layout";
 import Login from "./Auth/Login";
 import Register from "./Auth/Register";
+import AddCourses from "./AddComponent/AddCourses";
 import { TopBarProvider } from "./context/TopBarContext";
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<h1>About</h1>} />
                 <Route path="/use_effect" element={<UseEffect />} />
+                <Route path="/add-course" element={<AddCourses />} />
               </Routes>
             </TopBarProvider>
           }
